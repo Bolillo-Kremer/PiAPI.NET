@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PiAPI</name>
+    </assembly>
+    <members>
+        <member name="T:PiAPI.Pi">
+            <summary>
+            Adds easy functionality to help interface with PiAPI
+            https://github.com/Bolillo-Kremer/PiAPI
+            https://youtube.com/BolilloKremer
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pi.UrlOverride">
+            <summary>
+            If given a url, will not use <see cref="P:PiAPI.Pi.IpAddress"/> or <see cref="P:PiAPI.Pi.Port"/>
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pi.IpAddress">
+            <summary>
+            IP Address of your Raspberry Pi
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pi.Port">
+            <summary>
+            The port that PiAPI is running on (Default 5000)
+            </summary>
+        </member>
+        <member name="M:PiAPI.Pi.InitPin(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Initiates a GPIO pin on the Pi
+            </summary>
+            <param name="Pin">The pin number to initiate</param>
+            <param name="Direction">Either "in" or "out"</param>
+            <param name="Edge">edges should be configured for the pin</param>
+            <param name="Options">An optional options object</param>
+            <returns>The default state of the new pin</returns>
+        </member>
+        <member name="M:PiAPI.Pi.UnexportPin(System.Int32)">
+            <summary>
+            Unexports a pin from the Pi
+            </summary>
+            <param name="Pin">The pin to be unexported</param>
+            <returns>Response from the API</returns>
+        </member>
+        <member name="M:PiAPI.Pi.CleanExit">
+            <summary>
+            Unexports all pins on the Pi
+            </summary>
+            <returns>Response from the API</returns>
+        </member>
+        <member name="M:PiAPI.Pi.SetState(System.Int32,System.Object)">
+            <summary>
+            Sets the state of a given pin on the Pi
+            </summary>
+            <param name="Pin">The pin on the Pi (Or "*" for all pins)</param>
+            <param name="State">The state to set the pin (Or "toggle")</param>
+            <returns>The state of the pin (Or a JSON of all of the pins and their states)</returns>
+        </member>
+        <member name="M:PiAPI.Pi.SetAllStates(System.Object)">
+            <summary>
+            Sets all pins on the Pi to a given state
+            </summary>
+            <param name="State">The state to set the pins to (Or "toggle")</param>
+            <returns>JSON of all the pins that succeeded and failed</returns>
+        </member>
+        <member name="M:PiAPI.Pi.GetState(System.Int32)">
+            <summary>
+            Gets the state of a pin
+            </summary>
+            <param name="Pin">The pin on the Pi (Or "*" for all pins)</param>
+            <returns>The state of the pin (Or a JSON of all the pin states)</returns>
+        </member>
+        <member name="M:PiAPI.Pi.GetAllStates">
+            <summary>
+            Gets all current pin states from the PI
+            </summary>
+            <returns>JSON string of all the active pins and their states</returns>
+        </member>
+        <member name="P:PiAPI.Pi.ActivePins">
+            <summary>
+            A JSON array of all active pins
+            </summary>
+        </member>
+        <member name="M:PiAPI.Pi.Command(System.String)">
+            <summary>
+            Executes a Pi terminal command
+            </summary>
+        </member>
+        <member name="M:PiAPI.Pi.Reboot">
+            <summary>
+            Reboots the Pi
+            </summary>
+        </member>
+        <member name="M:PiAPI.Pi.Shutdown">
+            <summary>
+            Shutsdown the Pi
+            </summary>
+        </member>
+        <member name="M:PiAPI.Pi.Delay(System.Action,System.Int32)">
+            <summary>
+            Allows you to delay the execution of the next line of the thread while executing the current line
+            </summary>
+            <param name="DelayFunction">See <see cref="T:System.Action"/> that you want to delay</param>
+            <param name="Miliseconds">Miliseconds that you want to delay</param>
+        </member>
+        <member name="T:PiAPI.PiAPISettings">
+            <summary>
+            Creates an instance of a setting
+            </summary>
+        </member>
+        <member name="P:PiAPI.PiAPISettings.Port">
+            <summary>
+            The port that PiAPI runs on
+            </summary>
+        </member>
+        <member name="P:PiAPI.PiAPISettings.Keys">
+            <summary>
+            If not empty, PiAPI requires a key contained in this array for every request
+            </summary>
+        </member>
+        <member name="T:PiAPI.Utilities">
+            <summary>
+            Utilities for communicating with the API
+            </summary>
+        </member>
+        <member name="P:PiAPI.Utilities.RawUrl">
+            <summary>
+            Gets the raw url to PiAPI
+            </summary>
+        </member>
+        <member name="M:PiAPI.Utilities.Post(System.String,System.String)">
+            <summary>
+            Posts a given string to a url
+            </summary>
+            <param name="Url">The url to post to</param>
+            <param name="Content">The content to post to the url</param>
+            <returns>The response from the server</returns>
+        </member>
+        <member name="M:PiAPI.Utilities.Get(System.String)">
+            <summary>
+            Gets from a given url
+            </summary>
+            <param name="Url">The url to get from</param>
+            <returns>The response from the server</returns>
+        </member>
+        <member name="M:PiAPI.Utilities.ToJSON(System.Object)">
+            <summary>
+            Converts an object into a JSON string
+            </summary>
+            <param name="Object">The object to convert</param>
+            <returns>JSON formatted string</returns>
+        </member>
+        <member name="M:PiAPI.Utilities.ToDictionary(System.String)">
+            <summary>
+            Converts a JSON formatted string to a <see cref="T:System.Collections.Generic.Dictionary`2"/>
+            </summary>
+            <param name="JSONString">The new dictionary</param>
+            <returns>New dictionary</returns>
+        </member>
+        <member name="M:PiAPI.Utilities.ToArray(System.String)">
+            <summary>
+            Converts a JSON formatted string to a string[]/>
+            </summary>
+            <param name="JSONString"></param>
+            <returns>New array</returns>
+        </member>
+        <member name="M:PiAPI.Utilities.ToObject``1(System.Object)">
+            <summary>
+            Converts a JSON formatted string to an object
+            </summary>
+            <param name="Object"></param>
+            <returns>New JObject</returns>
+        </member>
+    </members>
+</doc>
