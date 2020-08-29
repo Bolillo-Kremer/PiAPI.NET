@@ -4,6 +4,56 @@
         <name>PiAPI</name>
     </assembly>
     <members>
+        <member name="T:PiAPI.Helpers.Edge">
+            <summary>
+            Initiates API values for Edge
+            </summary>
+        </member>
+        <member name="P:PiAPI.Helpers.Edge.Rising">
+            <summary>
+            Rising Edge
+            </summary>
+        </member>
+        <member name="P:PiAPI.Helpers.Edge.Falling">
+            <summary>
+            Falling Edge
+            </summary>
+        </member>
+        <member name="T:PiAPI.Pin">
+            <summary>
+            Initiates API values for Pin
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pin.Out">
+            <summary>
+            Pin output value
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pin.In">
+            <summary>
+            Pin input value
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pin.All">
+            <summary>
+            Key for getting all pins
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pin.High">
+            <summary>
+            High state
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pin.Low">
+            <summary>
+            Low state
+            </summary>
+        </member>
+        <member name="P:PiAPI.Pin.Toggle">
+            <summary>
+            Toggle state
+            </summary>
+        </member>
         <member name="T:PiAPI.Pi">
             <summary>
             Adds easy functionality to help interface with PiAPI
@@ -49,26 +99,26 @@
             </summary>
             <returns>Response from the API</returns>
         </member>
-        <member name="M:PiAPI.Pi.SetState(System.Int32,System.Object)">
+        <member name="M:PiAPI.Pi.SetState(System.Int32,System.Int32)">
             <summary>
             Sets the state of a given pin on the Pi
             </summary>
-            <param name="Pin">The pin on the Pi (Or "*" for all pins)</param>
-            <param name="State">The state to set the pin (Or "toggle")</param>
+            <param name="Pin">The pin on the Pi</param>
+            <param name="State">The state to set the pin (-1 is toggle)</param>
             <returns>The state of the pin (Or a JSON of all of the pins and their states)</returns>
         </member>
-        <member name="M:PiAPI.Pi.SetAllStates(System.Object)">
+        <member name="M:PiAPI.Pi.SetAllStates(System.Int32)">
             <summary>
             Sets all pins on the Pi to a given state
             </summary>
-            <param name="State">The state to set the pins to (Or "toggle")</param>
+            <param name="State">The state to set the pins to (-1 to toggle)</param>
             <returns>JSON of all the pins that succeeded and failed</returns>
         </member>
         <member name="M:PiAPI.Pi.GetState(System.Int32)">
             <summary>
             Gets the state of a pin
             </summary>
-            <param name="Pin">The pin on the Pi (Or "*" for all pins)</param>
+            <param name="Pin">The pin on the Pi</param>
             <returns>The state of the pin (Or a JSON of all the pin states)</returns>
         </member>
         <member name="M:PiAPI.Pi.GetAllStates">

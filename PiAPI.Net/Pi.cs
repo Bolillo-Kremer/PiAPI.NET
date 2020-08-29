@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
+using PiAPI.Helpers;
 
 namespace PiAPI
 {
@@ -32,23 +33,29 @@ namespace PiAPI
         /// <param name="Pin">The pin number to initiate</param>
         /// <param name="Direction">Either "in" or "out"</param>
         /// <param name="Edge">edges should be configured for the pin</param>
-        /// <param name="Options">An optional options object</param>
+        /// <param name="EdgeTimeout">An optional options object</param>
         /// <returns>The default state of the new pin</returns>
-        public static string InitPin(int Pin, string Direction, string Edge = null, string Options = null)
+        public static string InitPin(int Pin, string Direction, string Edge = null, int EdgeTimeout = -1)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
                 string Url = Utilities.RawUrl + "/InitPin";
 
-                if (Options != null) Options = JObject.FromObject(Options).ToString();
 
-                JObject PinSettings = JObject.FromObject(new
+                JObject PinSettings = new JObject();
+
+                PinSettings["pin"] = Pin;
+                PinSettings["direction"] = Direction;
+
+                if (Edge != null)
                 {
-                    pin = Pin,
-                    direction = Direction,
-                    edge = Edge,
-                    options = Options
-                });
+                    PinSettings["edge"] = Edge;
+                }
+
+                if (EdgeTimeout != -1)
+                {
+                    PinSettings["edgeTimeout"] = EdgeTimeout;
+                }
 
                 return Utilities.Post(Url, PinSettings.ToString()).Result;
             }
@@ -137,7 +144,7 @@ namespace PiAPI
 
                 JObject PinSettings = JObject.FromObject(new
                 {
-                    pin = "*",
+                    pin = Pin.All,
                     state = State
                 });
 
@@ -178,7 +185,7 @@ namespace PiAPI
             {
                 string Url = Utilities.RawUrl + "/GetState";
 
-                return Utilities.Post(Url, "*").Result;                
+                return Utilities.Post(Url, Pin.All).Result;                
             }
             else
             {
