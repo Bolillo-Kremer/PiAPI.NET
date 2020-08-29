@@ -99,10 +99,10 @@ namespace PiAPI
         /// <summary>
         /// Sets the state of a given pin on the Pi
         /// </summary>
-        /// <param name="Pin">The pin on the Pi (Or "*" for all pins)</param>
-        /// <param name="State">The state to set the pin (Or "toggle")</param>
+        /// <param name="Pin">The pin on the Pi</param>
+        /// <param name="State">The state to set the pin (-1 is toggle)</param>
         /// <returns>The state of the pin (Or a JSON of all of the pins and their states)</returns>
-        public static string SetState(int Pin, object State)
+        public static string SetState(int Pin, int State)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
@@ -126,9 +126,9 @@ namespace PiAPI
         /// <summary>
         /// Sets all pins on the Pi to a given state
         /// </summary>
-        /// <param name="State">The state to set the pins to (Or "toggle")</param>
+        /// <param name="State">The state to set the pins to (-1 to toggle)</param>
         /// <returns>JSON of all the pins that succeeded and failed</returns>
-        public static string SetAllStates(object State)
+        public static string SetAllStates(int State)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
@@ -152,7 +152,7 @@ namespace PiAPI
         /// <summary>
         /// Gets the state of a pin
         /// </summary>
-        /// <param name="Pin">The pin on the Pi (Or "*" for all pins)</param>
+        /// <param name="Pin">The pin on the Pi</param>
         /// <returns>The state of the pin (Or a JSON of all the pin states)</returns>
         public static string GetState(int Pin)
         {

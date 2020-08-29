@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>PiAPI</title>
+    <authors>Bolillo Kremer</authors>
+    <owners>Bolillo Kremer</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Bolillo-Kremer/PiAPI.NET</projectUrl>
+    <description>$description$</description>
+    <releaseNotes>Upgraded to .net standard 2.0</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>raspberry pi raspberrypi api</tags>
+  </metadata>
+</package>
