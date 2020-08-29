@@ -11,12 +11,32 @@
         </member>
         <member name="P:PiAPI.Helpers.Edge.Rising">
             <summary>
-            Rising Edge
+            Rising Edge value
             </summary>
         </member>
         <member name="P:PiAPI.Helpers.Edge.Falling">
             <summary>
-            Falling Edge
+            Falling Edge value
+            </summary>
+        </member>
+        <member name="P:PiAPI.Helpers.Edge.Both">
+            <summary>
+            Both Edges value
+            </summary>
+        </member>
+        <member name="T:PiAPI.Helpers.Pull">
+            <summary>
+            Initiates API values for Pull
+            </summary>
+        </member>
+        <member name="P:PiAPI.Helpers.Pull.Up">
+            <summary>
+            Pull Up value
+            </summary>
+        </member>
+        <member name="P:PiAPI.Helpers.Pull.Down">
+            <summary>
+            Pull Down value
             </summary>
         </member>
         <member name="T:PiAPI.Pin">
@@ -76,14 +96,14 @@
             The port that PiAPI is running on (Default 5000)
             </summary>
         </member>
-        <member name="M:PiAPI.Pi.InitPin(System.Int32,System.String,System.String,System.String)">
+        <member name="M:PiAPI.Pi.InitPin(System.Int32,System.String,System.String,System.Int32)">
             <summary>
             Initiates a GPIO pin on the Pi
             </summary>
             <param name="Pin">The pin number to initiate</param>
             <param name="Direction">Either "in" or "out"</param>
             <param name="Edge">edges should be configured for the pin</param>
-            <param name="Options">An optional options object</param>
+            <param name="EdgeTimeout">An optional options object</param>
             <returns>The default state of the new pin</returns>
         </member>
         <member name="M:PiAPI.Pi.UnexportPin(System.Int32)">
@@ -201,14 +221,14 @@
             <param name="Object">The object to convert</param>
             <returns>JSON formatted string</returns>
         </member>
-        <member name="M:PiAPI.Utilities.ToDictionary(System.String)">
+        <member name="M:PiAPI.Utilities.ToDictionary``2(System.String)">
             <summary>
             Converts a JSON formatted string to a <see cref="T:System.Collections.Generic.Dictionary`2"/>
             </summary>
             <param name="JSONString">The new dictionary</param>
             <returns>New dictionary</returns>
         </member>
-        <member name="M:PiAPI.Utilities.ToArray(System.String)">
+        <member name="M:PiAPI.Utilities.ToArray``1(System.String)">
             <summary>
             Converts a JSON formatted string to a string[]/>
             </summary>

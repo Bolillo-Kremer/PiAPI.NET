@@ -75,11 +75,11 @@ namespace PiAPI
         /// </summary>
         /// <param name="JSONString">The new dictionary</param>
         /// <returns>New dictionary</returns>
-        public static Dictionary<string, string> ToDictionary(this string JSONString)
+        public static Dictionary<TKey, TVal> ToDictionary<TKey, TVal>(this string JSONString)
         {
             try
             {
-                return JObject.Parse(JSONString).ToObject<Dictionary<string, string>>();
+                return JObject.Parse(JSONString).ToObject<Dictionary<TKey, TVal>>();
             }
             catch (Exception e)
             {
@@ -95,11 +95,11 @@ namespace PiAPI
         /// </summary>
         /// <param name="JSONString"></param>
         /// <returns>New array</returns>
-        public static string[] ToArray(this string JSONString)
+        public static T[] ToArray<T>(this string JSONString)
         {
             try
             {
-                return JArray.Parse(JSONString).ToObject<string[]>();
+                return JArray.Parse(JSONString).ToObject<T[]>();
             }
             catch (Exception e)
             {
@@ -109,6 +109,7 @@ namespace PiAPI
                 throw new Exception(Message);
             }
         }
+
 
         /// <summary>
         /// Converts a JSON formatted string to an object

@@ -23,7 +23,6 @@ namespace PiAPI
             {
                 SetSetting("port", value);
             }
-
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace PiAPI
         {
             get
             {
-                return GetSetting("keys").ToArray();
+                return GetSetting("keys").ToArray<string>();
             }
             set
             {
