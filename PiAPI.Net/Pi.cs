@@ -11,9 +11,9 @@ namespace PiAPI
     public class Pi
     {
         /// <summary>
-        /// If given a url, will not use <see cref="Pi.IpAddress"/> or <see cref="Pi.Port"/>
+        /// If given a url, will not use <see cref="Pi.IpAddress"/> or <see cref="Pi.SetPort"/>
         /// </summary>
-        private string UrlOverride;
+        protected string UrlOverride;
 
         /// <summary>
         /// IP Address of your Raspberry Pi
@@ -23,12 +23,12 @@ namespace PiAPI
         /// <summary>
         /// The port that PiAPI is running on on the raspberry pi
         /// </summary>
-        private int Port;
+        private long SetPort;
 
         /// <summary>
         /// PiAPI's default port
         /// </summary>
-        public static int DefualtPort { get; } = 5000;
+        public static long DefualtPort { get; } = 5000;
 
         /// <summary>
         /// Gets the raw url to PiAPI
@@ -41,7 +41,7 @@ namespace PiAPI
                 if (UrlOverride == string.Empty)
                 {
                     PiUrl += $"http://{IpAddress}";
-                    if (Port != -1) PiUrl += $":{Port}";
+                    if (SetPort != -1) PiUrl += $":{SetPort}";
                 }
                 else
                 {
@@ -56,9 +56,9 @@ namespace PiAPI
         /// </summary>
         ///<param name="IpAddress">The IpAddress of the raspberry pi</param>
         ///<param name="Port">The port that PiAPI is running on on the raspberry pi</param>
-        public Pi(string IpAddress, int Port) {
+        public Pi(string IpAddress, long Port) {
             this.IpAddress = IpAddress;
-            this.Port = Port;
+            this.SetPort = Port;
             this.UrlOverride = "";
         }
 
@@ -68,7 +68,7 @@ namespace PiAPI
         ///<param name="UrlOverride">The full url that PiAPI is running on on the raspberry pi</param>
         public Pi(string UrlOverride) {
             this.IpAddress = null;
-            this.Port = -1;
+            this.SetPort = -1;
             this.UrlOverride = UrlOverride;
         }
 
@@ -318,8 +318,8 @@ namespace PiAPI
         /// <summary>
         /// Returns the Port that was set during initialization
         /// </summary>
-        public int getPort() {
-            return Port;
+        public long getPort() {
+            return SetPort;
         }
     }
 }

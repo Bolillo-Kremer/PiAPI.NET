@@ -6,55 +6,37 @@ namespace PiAPI
     /// <summary>
     /// Creates an instance of a setting
     /// </summary>
-    public class PiAPISettings
+    public static class PiAPISettings
     {      
-        private Pi RPi;
-
-        /// <summary>
-        /// Initializes instance of PiAPISettings
-        /// </summary>
-        /// <param name="RPi">An instance of a Pi object</param>
-        PiAPISettings(Pi RPi) {
-            this.RPi = RPi;
-        }
-
         #region Properties
 
         /// <summary>
         /// The port that PiAPI runs on
         /// </summary>
-        public long Port
-        {
-            get
-            {
-                return long.Parse(GetSetting("port"));
-            }
-            set
-            {
-                SetSetting("port", value);
-            }
+        /// <param name="RPi">An instance of a Pi object</param>
+        public static long GetAPIPort(this Pi RPi) {
+            return long.Parse(RPi.GetAPISetting("port"));
         }
 
         /// <summary>
-        /// If not empty, PiAPI requires a key contained in this array for every request
+        /// The port that PiAPI runs on
         /// </summary>
-        public string[] Keys
-        {
-            get
-            {
-                return GetSetting("keys").ToArray<string>();
-            }
-            set
-            {
-                SetSetting("keys", value);
-            }
+        /// <param name="RPi">An instance of a Pi object</param>
+        /// <param name="Port">The new port value</param>
+        public static void SetAPIPort(this Pi RPi, long Port) {
+            RPi.SetAPISetting("port", Port);
         }
 
         #endregion Properties
 
         #region Functions
 
-        private string GetSetting(string SettingName)
+        /// <summary>
+        /// Returns a specefied setting value from PiAPI
+        /// </summary>
+        /// <param name="RPi">An instance of a Pi object</param>
+        /// <param name="SettingName">The name of the setting</param>
+        public static string GetAPISetting(this Pi RPi, string SettingName)
         {
             if (RPi.getIpAddress() != string.Empty || RPi.getPort() != -1)
             {
@@ -68,7 +50,13 @@ namespace PiAPI
             }
         }
 
-        private void SetSetting(string SettingName, object SettingValue)
+        /// <summary>
+        /// Sets a specefied PiAPI setting
+        /// </summary>
+        /// <param name="RPi">An instance of a Pi object</param>
+        /// <param name="SettingName">The name of the setting</param>
+        /// <param name="SettingValue">The value of the setting</param>
+        public static void SetAPISetting(this Pi RPi, string SettingName, object SettingValue)
         {
             if (RPi.getIpAddress() != string.Empty || RPi.getPort() != -1)
             {
