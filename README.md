@@ -2,7 +2,7 @@
 ##### [Bolillo Kremer](https://youtube.com/BolilloKremer?https://www.youtube.com/BolilloKremer?sub_confirmation=1)
 
 ## Overview
-This user friendly library allows you to easily interface with [PiAPI](https://github.com/Bolillo-Kremer/PiAPI). The simplicity of this library makes it easy for anybody to use. Most functionality is based off of [onoff](https://www.npmjs.com/package/onoff), which is running on [PiAPI](https://github.com/Bolillo-Kremer/PiAPI).
+This user friendly library allows you to easily interface with multiple raspberry pi's at once using [PiAPI](https://github.com/Bolillo-Kremer/PiAPI). The simplicity of this library makes it easy for anybody to use. Most functionality is based off of [onoff](https://www.npmjs.com/package/onoff), which is running on [PiAPI](https://github.com/Bolillo-Kremer/PiAPI).
 
 For updates on this project and other other entertainging coding projects, please subscribe to my YouTube channel, [Bolillo Kremer](https://youtube.com/BolilloKremer?https://www.youtube.com/BolilloKremer?sub_confirmation=1). 
 
@@ -96,8 +96,7 @@ Otherwise the settings will take place on server reboot.
 #### Example
 ```csharp
 //Changes port to 5000
-PiAPISettings MySettings = new PiAPISettings(Pi);
-MySettings.Port = 4000;
+MyPi.SetAPIPort(5000);
 ```
 
 ### Extensions
