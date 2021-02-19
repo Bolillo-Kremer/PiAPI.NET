@@ -21,7 +21,7 @@ using PiAPI;
 static public void Main(String[] args) 
 { 
     string IpAddress = "192.168.1.100";
-    int Port = Pi.DefaultPort; //(Default port = 5000)
+    long Port = Pi.DefaultPort; //(Default port = 5000)
     
     //Initialize Pi object with IPAddress and port of pi
     Pi MyPi = new Pi(IpAddress, Port);
