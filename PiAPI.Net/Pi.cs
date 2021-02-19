@@ -51,6 +51,15 @@ namespace PiAPI
             }
         }
 
+
+        private bool UrlIsValid 
+        { 
+            get 
+            {
+                return (IpAddress != string.Empty || UrlOverride != string.Empty);
+            }
+        }
+
         /// <summary>
         /// Initiates new Pi object
         /// </summary>
@@ -82,7 +91,7 @@ namespace PiAPI
         /// <returns>The default state of the new pin</returns>
         public string InitPin(int Pin, string Direction, string Edge = null, int EdgeTimeout = -1)
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/InitPin";
 
@@ -117,7 +126,7 @@ namespace PiAPI
         /// <returns>Response from the API</returns>
         public string UnexportPin(int Pin)
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/Unexport";
 
@@ -136,7 +145,7 @@ namespace PiAPI
         /// <returns>Response from the API</returns>
         public string CleanExit()
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/CleanExit";
 
@@ -156,7 +165,7 @@ namespace PiAPI
         /// <returns>The state of the pin (Or a JSON of all of the pins and their states)</returns>
         public string SetState(int Pin, int State)
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/SetState";
 
@@ -182,7 +191,7 @@ namespace PiAPI
         /// <returns>JSON of all the pins that succeeded and failed</returns>
         public string SetAllStates(int State)
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/SetState";
 
@@ -208,7 +217,7 @@ namespace PiAPI
         /// <returns>The state of the pin (Or a JSON of all the pin states)</returns>
         public int GetState(int Pin)
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/GetState";
 
@@ -226,7 +235,7 @@ namespace PiAPI
         /// <returns>JSON string of all the active pins and their states</returns>
         public string GetAllStates()
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/GetState";
 
@@ -244,7 +253,7 @@ namespace PiAPI
         public string ActivePins {
             get
             {
-                if (IpAddress != string.Empty || UrlOverride != string.Empty)
+                if (UrlIsValid)
                 {
                     string Url = RawUrl + "/ActivePins";
 
@@ -262,7 +271,7 @@ namespace PiAPI
         /// </summary>
         public string Command(string Command)
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/Command";
 
@@ -279,7 +288,7 @@ namespace PiAPI
         /// </summary>
         public void Reboot()
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/Command";
 
@@ -296,7 +305,7 @@ namespace PiAPI
         /// </summary>
         public void Shutdown()
         {
-            if (IpAddress != string.Empty || UrlOverride != string.Empty)
+            if (UrlIsValid)
             {
                 string Url = RawUrl + "/Command";
 
