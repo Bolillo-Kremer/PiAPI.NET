@@ -20,22 +20,21 @@ using PiAPI;
 ```csharp
 static public void Main(String[] args) 
 { 
-    //The IP address of your raspberry pi
-    Pi.IpAddress = "192.168.1.100";
-
-    //OPTIONAL (Default port = 5000)
-    //If you change the default port for PiAPI, you need to do this
-    Pi.Port = "5000";
+    string IpAddress = "192.168.1.100";
+    int Port = Pi.DefaultPort; //(Default port = 5000)
+    
+    //Initialize Pi object with IPAddress and port of pi
+    Pi MyPi = new Pi(IpAddress, Port);
 
     //You need to specify which pins will be set as input or output
-    Pi.InitPin(2, "in");
-    Pi.InitPin(3, "out");
+    MyPi.InitPin(2, "in");
+    MyPi.InitPin(3, "out");
 }
 ```
 
-If you would rather prove a specific url than using Pi.IpAddress and Pi.Port, you can do so like this.
+If you would rather provide a specific url than using an IP address and a port, you can do so like this.
 ```csharp
-Pi.UrlOverride = "http://192.168.1.100:5000";
+Pi MyPi = new Pi("http://192.168.1.100:5000");
 ```
 
 
@@ -44,24 +43,24 @@ Pi.UrlOverride = "http://192.168.1.100:5000";
 You can get the state (0 or 1) of a given pin using this function
 ```csharp
 //Returns the state of pin 2 as a string
-Pi.GetState(2);
+MyPi.GetState(2);
 ```
 
 You can also get a JSON formatted string of all the pin states using this function.
 
 ```csharp
 //Returns a Newtonsoft.Json.Linq.JObject
-Pi.GetStates();
+MyPi.GetStates();
 ```
 If you want to set the state (0 or 1) of a pin, use this function
 ```csharp
 //Sets pin 2 to state 0
-Pi.SetState(2, 0);
+MyPi.SetState(2, 0);
 ```
 Alternatively, you can use "toggle" to toggle the pins state
 ```csharp
 //Sets pin 2 to state 0
-Pi.SetState(2, "toggle");
+MyPi.SetState(2, "toggle");
 ```
 
 If you wish to set the state of all initiated pins, you can do so with the SetAllStates() function.
@@ -74,10 +73,10 @@ Additionaliy, you can access the raw url of PiAPI by calling Utilities.RawUrl.
 ##### Example
 ```cshrap
 //Posts "Some Content" to PiAPI
-string PostResponse = Utilities.Post(Utilities.RawUrl + "/SomePost", "Some content").Result;
+string POSTResponse = Utilities.Post(MyPi.RawUrl + "/SomePost", "Some content").Result;
 
 //Gets Response from PiAPI
-string GetResponse = Utilities.Get(Utilities.RawUrl + "/SomeGet").Result;
+string GETResponse = Utilities.Get(MyPi.RawUrl + "/SomeGet").Result;
 ```
 
 ### API Settings
@@ -97,7 +96,8 @@ Otherwise the settings will take place on server reboot.
 #### Example
 ```csharp
 //Changes port to 5000
-PiAPISettings.Port = 4000;
+PiAPISettings MySettings = new PiAPISettings(Pi);
+MySettings.Port = 4000;
 ```
 
 ### Extensions
@@ -117,7 +117,7 @@ The Delay function allows you to delay the next line in the thread while executi
 ```csharp
 //Delays the next line in the thread while executing the current line
 //Writes the state of pin 2 to the console and delays the next line by 500ms
-Pi.Delay(() => Console.WriteLine(Pi.GetState(2)), 500);
+Utilities.Delay(() => Console.WriteLine(Pi.GetState(2)), 500);
 ```
 Alternatively, you can use the delay function like this
 ```csharp
@@ -129,20 +129,13 @@ public static Action GetPin2()
 
 static public void Main(String[] args)
 {
-    //The IP address of your raspberry pi
-    Pi.IpAddress = "192.168.1.100";
-
-    //OPTIONAL (Default port = 5000)
-    //If you change the default port for PiAPI, you need to do this
-    Pi.Port = "5000";
+    //Initialize Pi object
+    Pi MyPi = new Pi("192.168.1.100", 5000)
 
     //OPTIONAL
     //All pins will be set to out as default
     //You need to specify which pins will be set as input
-    Pi.InitPins.add(2, "in");
-
-    //Initializes the connection to PiAPI
-    Pi.Initialize();
+    MyPi.InitPins.add(2, "in");
 
     //Delays the next line by 500ms after the current line is called
     GetPin2().Delay(500);
