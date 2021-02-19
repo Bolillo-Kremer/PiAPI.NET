@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Diagnostics;
-using PiAPI.Helpers;
 
 namespace PiAPI
 {
@@ -10,22 +8,69 @@ namespace PiAPI
     /// https://github.com/Bolillo-Kremer/PiAPI
     /// https://youtube.com/BolilloKremer
     /// </summary>
-    public static class Pi
+    public class Pi
     {
         /// <summary>
         /// If given a url, will not use <see cref="Pi.IpAddress"/> or <see cref="Pi.Port"/>
         /// </summary>
-        public static string UrlOverride { get; set; } = string.Empty;
+        private string UrlOverride;
 
         /// <summary>
         /// IP Address of your Raspberry Pi
         /// </summary>
-        public static string IpAddress { get; set; } = string.Empty;
+        private string IpAddress;
 
         /// <summary>
-        /// The port that PiAPI is running on (Default 5000)
+        /// The port that PiAPI is running on on the raspberry pi
         /// </summary>
-        public static string Port { get; set; } = "5000";
+        private int Port;
+
+        /// <summary>
+        /// PiAPI's default port
+        /// </summary>
+        public static int DefualtPort { get; } = 5000;
+
+        /// <summary>
+        /// Gets the raw url to PiAPI
+        /// </summary>
+        public string RawUrl
+        {
+            get
+            {
+                string PiUrl = string.Empty;
+                if (UrlOverride == string.Empty)
+                {
+                    PiUrl += $"http://{IpAddress}";
+                    if (Port != -1) PiUrl += $":{Port}";
+                }
+                else
+                {
+                    PiUrl = UrlOverride;
+                }
+                return PiUrl;
+            }
+        }
+
+        /// <summary>
+        /// Initiates new Pi object
+        /// </summary>
+        ///<param name="IpAddress">The IpAddress of the raspberry pi</param>
+        ///<param name="Port">The port that PiAPI is running on on the raspberry pi</param>
+        public Pi(string IpAddress, int Port) {
+            this.IpAddress = IpAddress;
+            this.Port = Port;
+            this.UrlOverride = "";
+        }
+
+        /// <summary>
+        /// Initiates new Pi object
+        /// </summary>
+        ///<param name="UrlOverride">The full url that PiAPI is running on on the raspberry pi</param>
+        public Pi(string UrlOverride) {
+            this.IpAddress = null;
+            this.Port = -1;
+            this.UrlOverride = UrlOverride;
+        }
 
         /// <summary>
         /// Initiates a GPIO pin on the Pi
@@ -35,11 +80,11 @@ namespace PiAPI
         /// <param name="Edge">edges should be configured for the pin</param>
         /// <param name="EdgeTimeout">An optional options object</param>
         /// <returns>The default state of the new pin</returns>
-        public static string InitPin(int Pin, string Direction, string Edge = null, int EdgeTimeout = -1)
+        public string InitPin(int Pin, string Direction, string Edge = null, int EdgeTimeout = -1)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/InitPin";
+                string Url = RawUrl + "/InitPin";
 
 
                 JObject PinSettings = new JObject();
@@ -70,11 +115,11 @@ namespace PiAPI
         /// </summary>
         /// <param name="Pin">The pin to be unexported</param>
         /// <returns>Response from the API</returns>
-        public static string UnexportPin(int Pin)
+        public string UnexportPin(int Pin)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/Unexport";
+                string Url = RawUrl + "/Unexport";
 
                 return Utilities.Post(Url, Pin.ToString()).Result;
             }
@@ -89,11 +134,11 @@ namespace PiAPI
         /// Unexports all pins on the Pi
         /// </summary>
         /// <returns>Response from the API</returns>
-        public static string CleanExit()
+        public string CleanExit()
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/CleanExit";
+                string Url = RawUrl + "/CleanExit";
 
                 return Utilities.Get(Url).Result;
             }
@@ -109,11 +154,11 @@ namespace PiAPI
         /// <param name="Pin">The pin on the Pi</param>
         /// <param name="State">The state to set the pin (-1 is toggle)</param>
         /// <returns>The state of the pin (Or a JSON of all of the pins and their states)</returns>
-        public static string SetState(int Pin, int State)
+        public string SetState(int Pin, int State)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/SetState";
+                string Url = RawUrl + "/SetState";
 
 
                 JObject PinSettings = JObject.FromObject(new
@@ -135,11 +180,11 @@ namespace PiAPI
         /// </summary>
         /// <param name="State">The state to set the pins to (-1 to toggle)</param>
         /// <returns>JSON of all the pins that succeeded and failed</returns>
-        public static string SetAllStates(int State)
+        public string SetAllStates(int State)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/SetState";
+                string Url = RawUrl + "/SetState";
 
 
                 JObject PinSettings = JObject.FromObject(new
@@ -161,13 +206,13 @@ namespace PiAPI
         /// </summary>
         /// <param name="Pin">The pin on the Pi</param>
         /// <returns>The state of the pin (Or a JSON of all the pin states)</returns>
-        public static string GetState(int Pin)
+        public int GetState(int Pin)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/GetState";
+                string Url = RawUrl + "/GetState";
 
-                return Utilities.Post(Url, Pin.ToString()).Result;
+                return Convert.ToInt16(Utilities.Post(Url, Pin.ToString()).Result);
             }
             else
             {
@@ -179,11 +224,11 @@ namespace PiAPI
         /// Gets all current pin states from the PI
         /// </summary>
         /// <returns>JSON string of all the active pins and their states</returns>
-        public static string GetAllStates()
+        public string GetAllStates()
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/GetState";
+                string Url = RawUrl + "/GetState";
 
                 return Utilities.Post(Url, Pin.All).Result;                
             }
@@ -196,12 +241,12 @@ namespace PiAPI
         /// <summary>
         /// A JSON array of all active pins
         /// </summary>
-        public static string ActivePins {
+        public string ActivePins {
             get
             {
                 if (IpAddress != string.Empty || UrlOverride != string.Empty)
                 {
-                    string Url = Utilities.RawUrl + "/ActivePins";
+                    string Url = RawUrl + "/ActivePins";
 
                     return Utilities.Get(Url).Result;
                 }
@@ -215,11 +260,11 @@ namespace PiAPI
         /// <summary>
         /// Executes a Pi terminal command
         /// </summary>
-        public static string Command(string Command)
+        public string Command(string Command)
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/Command";
+                string Url = RawUrl + "/Command";
 
                 return Utilities.Post(Url, Command).Result;
             }
@@ -232,11 +277,11 @@ namespace PiAPI
         /// <summary>
         /// Reboots the Pi
         /// </summary>
-        public static void Reboot()
+        public void Reboot()
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/Command";
+                string Url = RawUrl + "/Command";
 
                 _ = Utilities.Post(Url, "sudo reboot");
             }
@@ -249,11 +294,11 @@ namespace PiAPI
         /// <summary>
         /// Shutsdown the Pi
         /// </summary>
-        public static void Shutdown()
+        public void Shutdown()
         {
             if (IpAddress != string.Empty || UrlOverride != string.Empty)
             {
-                string Url = Utilities.RawUrl + "/Command";
+                string Url = RawUrl + "/Command";
 
                 _ = Utilities.Post(Url, "sudo shutdown -h");
             }
@@ -263,25 +308,18 @@ namespace PiAPI
             }
         }
 
+        /// <summary>
+        /// Returns the IPAddress of the Pi
+        /// </summary>
+        public string getIpAddress() {
+            return IpAddress;
+        }
 
         /// <summary>
-        /// Allows you to delay the execution of the next line of the thread while executing the current line
+        /// Returns the Port that was set during initialization
         /// </summary>
-        /// <param name="DelayFunction">See <see cref="Action"/> that you want to delay</param>
-        /// <param name="Miliseconds">Miliseconds that you want to delay</param>
-        public static void Delay(this Action DelayFunction, int Miliseconds)
-        {
-            Stopwatch SW = new Stopwatch();
-            SW.Start();
-            DelayFunction();
-            while (true)
-            {
-                if (SW.ElapsedMilliseconds > Miliseconds)
-                {
-                    SW.Stop();
-                    break;
-                }
-            }
+        public int getPort() {
+            return Port;
         }
     }
 }

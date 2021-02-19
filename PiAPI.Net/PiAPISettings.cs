@@ -6,14 +6,24 @@ namespace PiAPI
     /// <summary>
     /// Creates an instance of a setting
     /// </summary>
-    public static class PiAPISettings
-    {
+    public class PiAPISettings
+    {      
+        private Pi RPi;
+
+        /// <summary>
+        /// Initializes instance of PiAPISettings
+        /// </summary>
+        /// <param name="RPi">An instance of a Pi object</param>
+        PiAPISettings(Pi RPi) {
+            this.RPi = RPi;
+        }
+
         #region Properties
 
         /// <summary>
         /// The port that PiAPI runs on
         /// </summary>
-        public static long Port
+        public long Port
         {
             get
             {
@@ -28,7 +38,7 @@ namespace PiAPI
         /// <summary>
         /// If not empty, PiAPI requires a key contained in this array for every request
         /// </summary>
-        public static string[] Keys
+        public string[] Keys
         {
             get
             {
@@ -44,11 +54,11 @@ namespace PiAPI
 
         #region Functions
 
-        private static string GetSetting(string SettingName)
+        private string GetSetting(string SettingName)
         {
-            if (Pi.IpAddress != string.Empty || Pi.UrlOverride != string.Empty)
+            if (RPi.getIpAddress() != string.Empty || RPi.getPort() != -1)
             {
-                string Url = Utilities.RawUrl + "/GetSetting";
+                string Url = RPi.RawUrl + "/GetSetting";
 
                 return Utilities.Post(Url, SettingName).Result;
             }
@@ -58,11 +68,11 @@ namespace PiAPI
             }
         }
 
-        private static void SetSetting(string SettingName, object SettingValue)
+        private void SetSetting(string SettingName, object SettingValue)
         {
-            if (Pi.IpAddress != string.Empty || Pi.UrlOverride != string.Empty)
+            if (RPi.getIpAddress() != string.Empty || RPi.getPort() != -1)
             {
-                string Url = Utilities.RawUrl + "/SetSetting";
+                string Url = RPi.RawUrl + "/SetSetting";
 
                 JObject Setting = JObject.FromObject(new
                 {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace PiAPI
 {
@@ -13,27 +14,6 @@ namespace PiAPI
     public static class Utilities
     {
         private static readonly HttpClient Client = new HttpClient();
-
-        /// <summary>
-        /// Gets the raw url to PiAPI
-        /// </summary>
-        public static string RawUrl
-        {
-            get
-            {
-                string PiUrl = string.Empty;
-                if (Pi.UrlOverride == string.Empty)
-                {
-                    PiUrl += $"http://{Pi.IpAddress}";
-                    if (Pi.Port != null) PiUrl += $":{Pi.Port}";
-                }
-                else
-                {
-                    PiUrl = Pi.UrlOverride;
-                }
-                return PiUrl;
-            }
-        }
 
         /// <summary>
         /// Posts a given string to a url
@@ -139,6 +119,26 @@ namespace PiAPI
                 Message += "String must be in JSON Object format\n";
                 Message += e.ToString();
                 throw new Exception(Message);
+            }
+        }
+
+        /// <summary>
+        /// Allows you to delay the execution of the next line of the thread while executing the current line
+        /// </summary>
+        /// <param name="DelayFunction">See <see cref="Action"/> that you want to delay</param>
+        /// <param name="Miliseconds">Miliseconds that you want to delay</param>
+        public static void Delay(this Action DelayFunction, int Miliseconds)
+        {
+            Stopwatch SW = new Stopwatch();
+            SW.Start();
+            DelayFunction();
+            while (true)
+            {
+                if (SW.ElapsedMilliseconds > Miliseconds)
+                {
+                    SW.Stop();
+                    break;
+                }
             }
         }
     }

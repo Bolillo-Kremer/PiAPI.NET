@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PiAPI.Helpers
+﻿namespace PiAPI.Helpers
 {
     /// <summary>
     /// Initiates API values for Edge
