@@ -9,10 +9,10 @@
     <RepositoryType />
     <PackageTags>pi api raspberrypi raspberry</PackageTags>
     <Description>This library allows you to easily interface with PiAPI running on your raspberry pi</Description>
-    <AssemblyVersion>2.0.0.1</AssemblyVersion>
+    <AssemblyVersion>2.0.0.2</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>2.0.0.1</Version>
+    <Version>2.0.0.2</Version>
     <Company>Bolillo Kremer</Company>
     <PackageReleaseNotes>Added Type Helpers. Made updates to match API changes</PackageReleaseNotes>
   </PropertyGroup>

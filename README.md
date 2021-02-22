@@ -9,10 +9,11 @@ For updates on this project and other other entertainging coding projects, pleas
 ## How to use
 
 ### Requirements
-This library requires that [PiAPI](https://github.com/Bolillo-Kremer/PiAPI) is running on your raspberry pi. For instructions on how to install it, [click here](https://github.com/Bolillo-Kremer/PiAPI/blob/master/README.md).
+This library requires that [PiAPI](https://github.com/Bolillo-Kremer/PiAPI) is running on your raspberry pi. You can intall it on your pi with only one command! For instructions, [click here](https://github.com/Bolillo-Kremer/PiAPI/blob/master/README.md).
 
 ### Initializing
-After downloading the PiAPI nuget package, or adding a reference to this library in your project, you will need to setup you PiAPI connection like this.
+You van either install the PiAPI nuget package or download PiAPI.dll by clicking [here](#).
+After downloading the nuget package, or adding a reference to this library in your project, you will need to setup you PiAPI connection like this.
 
 ```csharp
 using PiAPI;

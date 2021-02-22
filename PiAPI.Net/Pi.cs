@@ -31,6 +31,11 @@ namespace PiAPI
         public static long DefualtPort { get; } = 5000;
 
         /// <summary>
+        /// No API URL provided
+        /// </summary>
+        public static Exception NoURL = new Exception("API url not provided");
+
+        /// <summary>
         /// Gets the raw url to PiAPI
         /// </summary>
         public string RawUrl
@@ -87,9 +92,9 @@ namespace PiAPI
         /// <param name="Pin">The pin number to initiate</param>
         /// <param name="Direction">Either "in" or "out"</param>
         /// <param name="Edge">edges should be configured for the pin</param>
-        /// <param name="EdgeTimeout">An optional options object</param>
+        /// <param name="EdgeTimeout">How long the pin should timeout after edge</param>
         /// <returns>The default state of the new pin</returns>
-        public string InitPin(int Pin, string Direction, string Edge = null, int EdgeTimeout = -1)
+        public string InitPin(int Pin, string Direction, string Edge = null, long EdgeTimeout = -1)
         {
             if (UrlIsValid)
             {
@@ -115,7 +120,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -134,7 +139,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
             
         }
@@ -153,7 +158,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -180,7 +185,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -206,7 +211,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -225,12 +230,12 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
         /// <summary>
-        /// Gets all current pin states from the PI
+        /// Gets all current pin states from the Pi
         /// </summary>
         /// <returns>JSON string of all the active pins and their states</returns>
         public string GetAllStates()
@@ -243,7 +248,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -261,7 +266,7 @@ namespace PiAPI
                 }
                 else
                 {
-                    throw new Exception("API url not provided");
+                    throw NoURL;
                 }
             }
         }
@@ -279,7 +284,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -296,7 +301,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
@@ -313,7 +318,7 @@ namespace PiAPI
             }
             else
             {
-                throw new Exception("API url not provided");
+                throw NoURL;
             }
         }
 
