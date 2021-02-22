@@ -13,5 +13,9 @@
     <releaseNotes>Upgraded to .net standard 2.0</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>raspberry pi raspberrypi api</tags>
+    <icon>images\PiAPI.png</icon>
   </metadata>
+  <files>
+    <file src="images\PiAPI.png" target="images\" />
+  </files>
 </package>
