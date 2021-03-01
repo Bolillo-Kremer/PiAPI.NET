@@ -38,7 +38,7 @@ namespace PiAPI
         /// <param name="SettingName">The name of the setting</param>
         public static string GetAPISetting(this Pi RPi, string SettingName)
         {
-            if (RPi.getIpAddress() != string.Empty || RPi.getPort() != -1)
+            if (RPi.GetIpAddress() != string.Empty || RPi.GetPort() != -1)
             {
                 string Url = RPi.RawUrl + "/GetSetting";
 
@@ -58,7 +58,7 @@ namespace PiAPI
         /// <param name="SettingValue">The value of the setting</param>
         public static void SetAPISetting(this Pi RPi, string SettingName, object SettingValue)
         {
-            if (RPi.getIpAddress() != string.Empty || RPi.getPort() != -1)
+            if (RPi.GetIpAddress() != string.Empty || RPi.GetPort() != -1)
             {
                 string Url = RPi.RawUrl + "/SetSetting";
 

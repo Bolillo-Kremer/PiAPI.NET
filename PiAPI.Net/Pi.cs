@@ -325,14 +325,14 @@ namespace PiAPI
         /// <summary>
         /// Returns the IPAddress of the Pi
         /// </summary>
-        public string getIpAddress() {
+        public string GetIpAddress() {
             return IpAddress;
         }
 
         /// <summary>
         /// Returns the Port that was set during initialization
         /// </summary>
-        public long getPort() {
+        public long GetPort() {
             return SetPort;
         }
     }

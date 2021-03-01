@@ -88,11 +88,7 @@ Current Settings:
 * Port (Gets or sets the port that the API is running on)
 * (IN DEVELOPMENT) Keys (Gets or sets keys that must be provided upon each request)
 
-For these changes to take place immediately, run PiAPI on your Pi with the following command.
-```npm
-npm run dev
-```
-Otherwise the settings will take place on server reboot.
+The settings will take place on server reboot.
 
 #### Example
 ```csharp
