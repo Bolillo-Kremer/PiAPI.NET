@@ -18,7 +18,7 @@ namespace PiAPI
         /// <summary>
         /// IP Address of your Raspberry Pi
         /// </summary>
-        private string IpAddress;
+        protected string IpAddress;
 
         /// <summary>
         /// The port that PiAPI is running on on the raspberry pi
@@ -56,8 +56,10 @@ namespace PiAPI
             }
         }
 
-
-        private bool UrlIsValid 
+        /// <summary>
+        /// Checks if the URL is valid
+        /// </summary>
+        protected bool UrlIsValid 
         { 
             get 
             {
@@ -93,13 +95,12 @@ namespace PiAPI
         /// <param name="Direction">Either "in" or "out"</param>
         /// <param name="Edge">edges should be configured for the pin</param>
         /// <param name="EdgeTimeout">How long the pin should timeout after edge</param>
-        /// <returns>The default state of the new pin</returns>
-        public string InitPin(int Pin, string Direction, string Edge = null, long EdgeTimeout = -1)
+        /// <returns>New instance of <see cref="Pin" /></returns>
+        public Pin InitPin(int Pin, string Direction, string Edge = null, long EdgeTimeout = -1)
         {
             if (UrlIsValid)
             {
                 string Url = RawUrl + "/InitPin";
-
 
                 JObject PinSettings = new JObject();
 
@@ -116,7 +117,9 @@ namespace PiAPI
                     PinSettings["edgeTimeout"] = EdgeTimeout;
                 }
 
-                return Utilities.Post(Url, PinSettings.ToString()).Result;
+                _ = Utilities.Post(Url, PinSettings.ToString()).Result;
+
+                return new Pin(RawUrl, Pin, Direction, Edge, EdgeTimeout);
             }
             else
             {
@@ -140,8 +143,7 @@ namespace PiAPI
             else
             {
                 throw NoURL;
-            }
-            
+            }          
         }
 
         /// <summary>
@@ -155,33 +157,6 @@ namespace PiAPI
                 string Url = RawUrl + "/CleanExit";
 
                 return Utilities.Get(Url).Result;
-            }
-            else
-            {
-                throw NoURL;
-            }
-        }
-
-        /// <summary>
-        /// Sets the state of a given pin on the Pi
-        /// </summary>
-        /// <param name="Pin">The pin on the Pi</param>
-        /// <param name="State">The state to set the pin (-1 is toggle)</param>
-        /// <returns>The state of the pin (Or a JSON of all of the pins and their states)</returns>
-        public string SetState(int Pin, int State)
-        {
-            if (UrlIsValid)
-            {
-                string Url = RawUrl + "/SetState";
-
-
-                JObject PinSettings = JObject.FromObject(new
-                {
-                    pin = Pin,
-                    state = State
-                });
-
-                return Utilities.Post(Url, PinSettings.ToString()).Result;
             }
             else
             {
@@ -208,25 +183,6 @@ namespace PiAPI
                 });
 
                 return Utilities.Post(Url, PinSettings.ToString()).Result;
-            }
-            else
-            {
-                throw NoURL;
-            }
-        }
-
-        /// <summary>
-        /// Gets the state of a pin
-        /// </summary>
-        /// <param name="Pin">The pin on the Pi</param>
-        /// <returns>The state of the pin (Or a JSON of all the pin states)</returns>
-        public int GetState(int Pin)
-        {
-            if (UrlIsValid)
-            {
-                string Url = RawUrl + "/GetState";
-
-                return Convert.ToInt16(Utilities.Post(Url, Pin.ToString()).Result);
             }
             else
             {
